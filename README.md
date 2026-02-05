@@ -1,103 +1,98 @@
-# bertweet-shap-bot-detection
+# Explainable AI Methods for Understanding Decisions of Text-based Language Models
 
-This repository contains the code accompanying a Master’s thesis on explainable
-text-based bot detection using transformer models and SHAP.
+This repository contains the code accompanying a Master’s thesis on
+text-based bot detection using transformer models with a focus on
+model interpretability through SHAP.
 
----
-
-## 1. Project Overview
-
-- What is the central research objective of this project?
-- Which classification task is addressed (e.g. bot vs. human on Twitter)?
-- Which model architecture is used as the primary focus, and why?
-- Why is explainability a core aspect beyond predictive performance?
-- In which academic context was this project developed?
+The project investigates how explainable AI methods can be used to
+analyze and better understand the decisions of fine-tuned language
+models in a bot-vs-human classification setting.
 
 ---
 
-## 2. Dataset
+## Repository Structure
 
-- Which dataset is used as the data source?
-- At which level are labels defined (author-level vs. tweet-level)?
-- Why are the original data files not included in this repository?
-- Which file illustrates the expected data schema?
-- Where are dataset-specific details documented?
+The repository is organized into the following main components:
 
-(See `data/README.md` for dataset-related notes.)
+src/  
+- preprocessing/  Data preparation, filtering, sampling, statistics  
+- training/    Model training, author-disjoint splits, evaluation  
+- explainability/ SHAP-based local and global explainability analyses  
 
----
+plots/  
+- Scripts for result visualizations  
 
-## 3. Repository Structure
+reports/  
+- Figures and tables used in the written thesis  
 
-The repository is structured into the following main components:
-
-- `src/preprocessing/`  
-  – Scripts for data filtering, deduplication, sampling, and descriptive statistics.
-
-- `src/training/`  
-  – Model training, author-disjoint data splitting, evaluation, and configuration.
-
-- `src/explainability/`  
-  – SHAP-based local and global explainability analyses.
-
-- `plots/`  
-  – Scripts for generating figures used in the results section of the thesis.
-
-- `reports/`  
-  – Folder intended for final figures and tables used in the written thesis.
+data/  
+- example_data.csv Synthetic placeholder illustrating the data schema  
+- README.md    Notes on data availability and structure  
 
 ---
 
-## 4. Preprocessing
+## Data Availability
 
-- What is the initial format of the raw data?
-- Which preprocessing steps are applied before model training?
-- How is the final working sample constructed?
-- Which design decisions are applied to ensure robustness and reproducibility?
-- Which scripts implement these steps?
+The original Twitter dataset used in this project is **not included**
+in this repository due to licensing and privacy restrictions.
 
----
-
-## 5. Training and Evaluation
-
-- Which model is fine-tuned for the classification task?
-- How are training, validation, and test splits defined?
-- Why are author-disjoint splits used?
-- Which evaluation metrics are reported?
-- How is early stopping and model selection handled?
+The file `data/example_data.csv` contains **synthetic placeholder data**
+that illustrates the expected data format required by the codebase.
+It does **not** contain real tweets or user information.
 
 ---
 
-## 6. Explainability
+## Model Training and Evaluation
 
-- Which explainability method is applied?
-- What is the distinction between local and global explainability in this project?
-- At which level are explanations computed (token-level, aggregated units)?
-- Which approximations or assumptions are made?
-- Where is the explainability logic implemented?
+Model training and evaluation are implemented in the `src/training/`
+directory. The code includes:
 
----
+- fine-tuning of transformer-based language models  
+- author-disjoint data splitting  
+- evaluation using standard classification metrics  
+- comparison of different data split configurations  
 
-## 7. Visualizations and Reports
-
-- Which results are visualized using plots?
-- Which aspects of model performance are compared graphically?
-- Why are no classical SHAP local plots included?
-- How are local SHAP results presented instead?
-- Which outputs are intended for the final thesis document?
+All training-related logic is separated from visualization and
+explainability code.
 
 ---
 
-## 8. Reproducibility Notes
+## Explainability
 
-- Which Python version and core libraries are required?
-- Are there hardware assumptions (e.g. GPU availability)?
-- Which artefacts are generated locally but not versioned?
-- What is required to conceptually reproduce the experiments?
+Explainability analyses are implemented in `src/explainability/` and
+are based on SHAP.
+
+- **Global SHAP** is used to analyze aggregated feature contributions
+  across multiple samples.  
+- **Local SHAP** is used for qualitative case analysis of individual
+  predictions.  
+
+Local SHAP results are presented as **structured example analyses**
+rather than graphical SHAP plots.
 
 ---
 
-## 9. Context
+## Visualizations and Reports
 
-This repository accompanies a Master’s thesis in the field of digital media,
-machine learning, and explainable artificial intelligence.
+Scripts for generating figures and tables used in the thesis are
+located in the `plots/` directory.
+
+Final figures and tables intended for inclusion in the written thesis
+are collected under `reports/`.
+
+---
+
+## Reproducibility Notes
+
+- The repository focuses on **code-level reproducibility**.  
+- Generated artefacts (model checkpoints, outputs, intermediate files)
+  are created locally and are not versioned.  
+- Model training was conducted in a cloud-based environment
+  (Google Colab) using an NVIDIA A100 GPU.
+
+## Context
+
+This repository accompanies a Master’s thesis in the field of
+digital media, natural language processing, and explainable
+artificial intelligence.
+
