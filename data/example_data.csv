@@ -1,1 +1,6 @@
+author_id,clean_text,label
+12345,"this is an example tweet text used only to illustrate the data format",human
+67890,"automated account posting repeated promotional content",bot
+24680,"another synthetic example sentence for documentation purposes",human
+13579,"synthetic bot-like message with links and hashtags",bot
 
