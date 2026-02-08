@@ -83,7 +83,6 @@ data = {
 
 df = pd.DataFrame(data)
 
-# Nach F1 Macro sortieren
 df_macro_sorted = df.sort_values(by='f1_macro', ascending=False)
 
 plt.figure(figsize=(8, 5))
