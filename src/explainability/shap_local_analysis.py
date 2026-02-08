@@ -3,7 +3,19 @@
 # Kategorien bleiben: TP/TN/FP/FN × Sicher/Unsicher
 # Confidence:
 #   Confident   >= 75%
-#   Non confident 55–60% 
+#   Non confident <= 60% 
+
+# Purpose of this script:
+# - Select a small set of representative tweet examples.
+# - Explain individual model decisions with SHAP at a local level.
+# - Compare correct and incorrect predictions (TP, TN, FP, FN),
+#   each for confident and uncertain cases.
+#
+# Important note:
+# - Explanations show how the model arrived at a decision for a single tweet.
+# - They are illustrative examples and not general rules about human or bot behavior.
+# - Word-level explanations are approximate, as the model internally operates on subword units.
+
 # ============================================================
 
 import numpy as np
@@ -31,7 +43,7 @@ TOP_K       = 10
 
 CONF_HIGH = 75.0
 
-# Unsicher: wir picken Beispiele bevorzugt in 55-60
+# Range for uncertain examples
 UNSICHER_MIN    = 55.0
 UNSICHER_MAX    = 60.0
 UNSICHER_TARGET = 59.0
@@ -290,8 +302,6 @@ print(df_candidates["category"].value_counts())
 
 # ============================================================
 # Exactly 1 example per category (8 total)
-# Sicher: max pred_percent
-# Unsicher: prefer near UNSICHER_TARGET within 55-60
 # ============================================================
 CATEGORIES = [
     "TP_Sicher","TP_Unsicher","TN_Sicher","TN_Unsicher",
