@@ -14,7 +14,7 @@ val_loss = [0.6450, 0.6389, 0.6626, 0.6947]
 fig = plt.figure(figsize=(8, 3.5))
 gs = GridSpec(1, 2, wspace=0.45) 
 
-# Links: F1 (grün)
+# Left: F1 (green)
 ax1 = fig.add_subplot(gs[0, 0])
 ax1.plot(epochs, val_f1, marker='o', color='green')
 ax1.set_xlabel("Epoch")
@@ -22,7 +22,7 @@ ax1.set_ylabel("Validation F1")
 ax1.set_ylim(0.60, 0.65)
 ax1.set_title("")
 
-# Rechts: Loss (rot)
+# Right: Loss (red)
 ax2 = fig.add_subplot(gs[0, 1])
 ax2.plot(epochs, val_loss, marker='s', color='red')
 ax2.set_xlabel("Epoch")
@@ -37,11 +37,10 @@ plt.show()
 
 sizes = [2000, 5000, 10000, 20000, 30000, 40000, 50000, 60000]
 
-# Test-F1-Werte
+# Test-F1-Values
 test_701515 = [0.5954, 0.6039, 0.6175, 0.6267, 0.6179, 0.6176, 0.6278, 0.6327]
 test_801010 = [0.5686, 0.6100, 0.6162, 0.6308, 0.6281, 0.6236, 0.6355, 0.6360]
 
-# Gemeinsame Skala berechnen
 all_test = test_801010 + test_701515
 ymin = round(min(all_test) - 0.01, 2)
 ymax = round(max(all_test) + 0.01, 2)
@@ -51,8 +50,6 @@ fig, ax = plt.subplots(figsize=(9,5))
 
 ax.plot(sizes, test_801010, marker="o", linestyle="-", label="Test F1 (80-10-10)", color="tab:green")
 ax.plot(sizes, test_701515, marker="s", linestyle="-", label="Test F1 (70-15-15)", color="tab:red")
-
-# Formatierung
 
 ax.set_xlabel("Trainingsgröße", fontsize=12)
 ax.set_ylabel("Macro-F1", fontsize=12)
