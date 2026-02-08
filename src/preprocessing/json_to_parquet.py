@@ -1,3 +1,14 @@
+------------------------------------------------------------------------------------
+# Purpose of this script:
+# - Convert large raw tweet JSON files into a compact and efficient Parquet format.
+# - Process the data in chunks to handle very large files without exhausting memory.
+#
+# Important note:
+# - The conversion preserves only the fields required for later analysis.
+# - Chunking and merging are technical steps to enable scalable data processing,
+#   not analytical decisions.
+-------------------------------------------------------------------------------------
+
 import ijson
 import pandas as pd
 import os
