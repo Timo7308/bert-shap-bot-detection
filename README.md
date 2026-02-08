@@ -1,6 +1,6 @@
 # Explainable AI Methods for Understanding Decisions of Text-based Language Models
 
-This repository contains the code accompanying a Master’s thesis on  
+This repository contains the code for a Master’s thesis on  
 text-based bot detection using transformer models, with a focus on  
 model interpretability through SHAP.
 
