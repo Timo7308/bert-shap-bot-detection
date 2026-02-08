@@ -5,11 +5,20 @@
 #  - SHAP strikt token-level
 #  - Projektion token->surface-units via greedy string matching (Approximation)
 #  - Ranking global: mean absolute SHAP per class (HUMAN vs BOT)
+
+# Purpose of this script:
+# - Select a balanced set of tweets (same number of human and bot examples).
+# - Use the trained language model to explain its decisions with SHAP.
+# - Aggregate explanations over many tweets to identify words that are most influential
+#   for predicting "human" versus "bot".
 #
-# + Export: author_ids der SHAP-Stichprobe
+# Important note:
+# - The results describe tendencies in this specific sample and model.
+# - They do not represent general or causal rules about human or bot behavior.
 # =========================================================
 
-# -------------------- Konfiguration --------------------
+
+# -------------------- Configuration --------------------
 CSV_PATH   = "/content/twibot3.csv"
 MODEL_DIR  = "/content/best/"
 
@@ -26,7 +35,7 @@ MAX_EVALS     = 120
 BATCH_SIZE    = 16
 SHAP_MAX_LEN  = 96           
 
-TOP_K         = 20
+TOP_K         = 10
 EXCLUSIVE_TOPK = True     
 
 INCLUDE_URLS_IN_SURFACE = True
@@ -35,6 +44,7 @@ INCLUDE_URLS_IN_SURFACE = True
 EXPORT_ORDERED_IDS_CSV = "/content/shap_global_sample_author_ids_ordered.csv"
 EXPORT_UNIQUE_IDS_CSV  = "/content/shap_global_sample_author_ids_unique.csv"
 EXPORT_SAMPLE_ROWS_CSV = "/content/shap_global_sample_rows.csv"  # optional
+
 
 # -------------------- Imports & Repro --------------------
 import time, random
@@ -51,6 +61,7 @@ random.seed(SEED); np.random.seed(SEED); torch.manual_seed(SEED)
 if torch.cuda.is_available(): torch.cuda.manual_seed_all(SEED)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("[INFO] Device:", device)
+
 
 # -------------------- CSV robust --------------------
 def _read_csv_any(path):
@@ -76,6 +87,7 @@ df = df[df[LABEL_COL].isin([0,1])].reset_index(drop=True)
 ID2LABEL = {0:"HUMAN", 1:"BOT"}
 LABEL2ID = {"HUMAN":0, "BOT":1}
 
+
 # -------------------- Modell & Tokenizer --------------------
 model = AutoModelForSequenceClassification.from_pretrained(
     MODEL_DIR, id2label=ID2LABEL, label2id=LABEL2ID
@@ -90,6 +102,7 @@ if USE_FP16:
     try: model.half()
     except Exception: USE_FP16 = False
 print("[INFO] FP16:", USE_FP16)
+
 
 # -------------------- Model callable (logits oder probs) --------------------
 def _encode(texts):
@@ -315,7 +328,8 @@ def make_exclusive(rank_bot: pd.DataFrame, rank_hum: pd.DataFrame, k: int):
     hum_sel = take_topk_with_backfill(rank_hum, ban=ban, k=k)
     return bot_sel.reset_index(drop=True), hum_sel.reset_index(drop=True)
 
-# -------------------- SHAP berechnen --------------------
+# -------------------- Compute SHAP --------------------
+
 t0 = time.time()
 # explainer(texts, ...) returns shap.Explanation with len = N
 shap_vals_global = explainer(texts_global, max_evals=MAX_EVALS, batch_size=BATCH_SIZE)
@@ -323,6 +337,7 @@ print(f"[Timing] SHAP computed in {time.time()-t0:.1f}s")
 
 # Optional: um Projektion stabil zu halten, kürzen wir die Tokens über den Tokenizer selbst
 # (nicht zwingend; wenn du willst, kann man hier vorher texts_global tokenisieren und kürzen)
+
 
 # -------------------- Global Aggregation --------------------
 mean_abs_h, mean_abs_b = aggregate_global_mean_abs(shap_vals_global, texts_global)
@@ -343,6 +358,7 @@ except Exception: print(bot_top.to_string(index=False))
 print("\n=== SHAP GLOBAL – Top Tokens (mean |SHAP|) – HUMAN output ===")
 try: display(human_top)
 except Exception: print(human_top.to_string(index=False))
+    
 
 # -------------------- Export author_ids --------------------
 pd.DataFrame({"author_id": author_ids_global}).to_csv(EXPORT_ORDERED_IDS_CSV, index=False)
