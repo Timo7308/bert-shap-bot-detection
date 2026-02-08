@@ -1,3 +1,16 @@
+--------------------------------------------------------------------------------------
+# Purpose of this script:
+# - Create a large, balanced tweet sample from the original Twibot-22 dataset.
+# - Map author-level labels (human/bot) to tweet-level data.
+# - Randomly sample an equal number of bot and human tweets.
+#
+# Important note:
+# - Labels are assigned at the author level and inherited by all tweets of that author.
+# - The resulting dataset is a balanced subsample used for analysis and model training,
+#   not a representation of real-world class distributions.
+---------------------------------------------------------------------------------------
+
+
 #Creating main random sample from all the data
 import pandas as pd
 import random
