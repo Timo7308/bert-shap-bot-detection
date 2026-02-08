@@ -20,14 +20,11 @@ The repository is organized into the following main components:
 - **explainability/** SHAP-based local and global explainability analyses  
 
 **plots/**  
-- Scripts for generating result visualizations  
+- Scripts for generating visualizations  
 
-**reports/**  
-- Figures and tables used in the written thesis  
 
 **data/**  
 - `example_data.csv` Synthetic placeholder illustrating the data schema  
-- `README.md`    Notes on data availability and structure  
 
 ---
 
@@ -52,9 +49,6 @@ directory. The code includes:
 - evaluation using standard classification metrics  
 - comparison of different data split configurations  
 
-All training-related logic is separated from visualization and  
-explainability code.
-
 ---
 
 ## Explainability
@@ -70,13 +64,10 @@ rather than graphical SHAP plots.
 
 ---
 
-## Visualizations and Reports
+## Visualizations 
 
 Scripts for generating figures and tables used in the thesis are  
 located in the `plots/` directory.
-
-Final figures and tables intended for inclusion in the written thesis  
-are collected under `reports/`.
 
 ---
 
