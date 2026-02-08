@@ -1,3 +1,14 @@
+----------------------------------------------------------------------------------------------
+# Purpose of this script:
+# - Filter the preprocessed dataset to English-language tweets only.
+# - Ensure language consistency for training and analysis of the language model.
+#
+# Important note:
+# - Language detection is automatic and may be imperfect for short or noisy texts.
+# - The filter is applied to improve overall data quality, not to perfectly classify language.
+-----------------------------------------------------------------------------------------------
+
+
 import pandas as pd
 import csv
 import langid
