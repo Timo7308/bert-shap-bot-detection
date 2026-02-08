@@ -1,6 +1,20 @@
 # =======================
 # Bot-vs-Human
 # Compare 80/10/10 vs 70/15/15
+
+# Purpose of this script:
+# - Train and evaluate a bot-vs-human classifier (BERTweet) on different training set sizes.
+# - Compare two dataset split schemes (80/10/10 vs 70/15/15) while keeping authors disjoint
+#   between train/validation/test to prevent leakage from the same account.
+#
+# Key idea for a fair split comparison:
+# - Both schemes share the same fixed validation set (Val10) and the same fixed test set (Test10).
+# - This allows a direct comparison of model performance across split schemes on identical data.
+#
+# Important note:
+# - Results describe performance for this dataset, preprocessing, and random seed(s).
+# - The goal is methodological comparison (split and data size effects), not hyperparameter optimization.
+
 # =======================
 
 import os, random, numpy as np, pandas as pd, torch, matplotlib.pyplot as plt, tempfile, shutil
