@@ -1,6 +1,20 @@
 # =============================
 # Compare different variants @ 20k (strict 50/50), 80/10/10
-# Setup: globaler Seed, Author-Cap=5, NUM_EPOCHS=4, LR=3e-5
+# Setup: global Seed, Author-Cap=5, NUM_EPOCHS=4, LR=3e-5
+
+# Purpose of this script:
+# - Compare multiple transformer model variants for bot-vs-human classification under the same conditions.
+# - Use a fixed training size (20k tweets, strict 50/50), a fixed author-disjoint 80/10/10 split,
+#   and the same training setup (epochs, learning rate, author-cap) for all models.
+#
+# Key idea for a fair model comparison:
+# - All models are trained and evaluated on the same data split and sampling strategy.
+# - Differences in performance are therefore mainly attributable to the model choice,
+#   not to different data or split conditions.
+#
+# Important note:
+# - This is a controlled comparison for robustness/selection, not hyperparameter tuning.
+# - Results depend on this dataset, preprocessing pipeline, and the chosen random seed.
 # =============================
 
 import os, random, numpy as np, pandas as pd, torch, matplotlib.pyplot as plt, tempfile, shutil
