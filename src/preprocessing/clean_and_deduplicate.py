@@ -1,3 +1,16 @@
+--------------------------------------------------------------------------------
+# Purpose of this script:
+# - Prepare the raw Twitter dataset for model training and analysis.
+# - Remove empty, duplicate, and very short tweets.
+# - Normalize text by replacing URLs and user mentions with placeholders
+#   and removing emojis and special characters.
+#
+# Important note:
+# - The minimum word-length filter is applied to ensure sufficient textual context.
+# - Text preprocessing is a design choice and may influence which patterns
+#   the model can learn from the data.
+---------------------------------------------------------------------------------
+
 import pandas as pd
 import re
 import csv
