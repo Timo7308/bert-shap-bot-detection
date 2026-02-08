@@ -2,6 +2,22 @@
 # BERTweet-base
 # Datasize: 20.000
 # Split: 80/10/10 (author-disjoint)
+
+# Purpose of this script:
+# - Train the final BERTweet-base model for bot-vs-human classification under the selected setup
+#   (20k training tweets, strict 50/50 sampling, author-disjoint 80/10/10 split).
+# - Evaluate the trained model on a fixed, unseen author-disjoint test set and report standard metrics.
+# - Save the best model checkpoint (based on validation Macro-F1) and export tables/plots for the thesis.
+#
+# Key methodological choices:
+# - Author-disjoint split prevents leakage: tweets from the same account cannot appear in multiple splits.
+# - Training data is capped per author and sampled 50/50 to control for dominance of very active accounts
+#   and to keep class balance for analysis.
+#
+# Important note:
+# - This run documents the chosen configuration and its results; it is not a hyperparameter search.
+# - Reported performance depends on the dataset, preprocessing pipeline, and the fixed random seed.
+
 # =======================
 
 import os, random, tempfile
