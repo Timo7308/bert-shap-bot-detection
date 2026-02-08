@@ -22,13 +22,12 @@ def read_robust_csv(path: str, usecols, chunksize=200_000):
 df = read_robust_csv(CSV_PATH, usecols=["author_id", "text", "created_at", "label"])
 
 # ---------- normalize column names ----------
-# Falls du im restlichen Code lieber clean_text nutzt:
 df = df.rename(columns={"text": "clean_text"})
 
-# ---------- basic sanity checks (RAW, keine Drops) ----------
+# ---------- basic sanity checks ----------
 n_rows = len(df)
 
-# Missing in required columns (robust falls Spalten doch fehlen)
+# Missing in required columns 
 required_cols = ["clean_text", "label", "author_id"]
 for c in required_cols:
     if c not in df.columns:
@@ -41,7 +40,6 @@ empty_text = df["clean_text"].astype(str).str.strip().eq("").sum()
 df["label_num"] = df["label"].map(LABEL_MAP)
 unmapped_labels = df["label_num"].isna().sum()
 
-# Für Statistik: nur Zeilen mit gültigem Label (Text/Author bleiben RAW, keine Filter außer Label-Validität)
 df_l = df.dropna(subset=["label_num"]).copy()
 df_l["label_num"] = df_l["label_num"].astype(int)
 df_l["author_id"] = df_l["author_id"].astype(str)
